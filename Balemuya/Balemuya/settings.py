@@ -202,16 +202,21 @@ CHANNEL_LAYERS = {
 
 
 
-DATABASE_URL = os.getenv(
-    'POSTGRES_DATABASE_URL',
-    'postgresql://postgres.kakjszylvsswigvfgdiu:balemuya123@aws-0-us-east-1.pooler.supabase.com:5432/postgres'
-)
+# DATABASE_URL = os.getenv(
+#     'POSTGRES_DATABASE_URL',
+#     'postgresql://postgres.kakjszylvsswigvfgdiu:balemuya123@aws-0-us-east-1.pooler.supabase.com:5432/postgres'
+# )
+
+# DATABASES = {
+#     'default': dj_database_url.config(default=DATABASE_URL)
+# }
 
 DATABASES = {
-    'default': dj_database_url.config(default=DATABASE_URL)
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
-
-
 
 
 # Password validation
