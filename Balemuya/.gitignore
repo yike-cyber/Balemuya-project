@@ -1,3 +1,4 @@
 .vercel
 .env
+db.sqlite3
 /staticfiles
