@@ -5,7 +5,7 @@ from django.utils import timezone
 from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager,PermissionsMixin
 from decimal import Decimal
-
+from django.core.exceptions import ValidationError
 
 # Address Model
 class Address(models.Model):
@@ -67,7 +67,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=30,null=True,blank=True )
     profile_image = CloudinaryField('image', null=True, blank=True, folder='Profile/profile_images')
     address = models.ForeignKey('Address', on_delete=models.SET_NULL, related_name='users', null=True, blank=True)
-    gender = models.CharField(choices=[('male','Male'),('female','Female')],null=True,blank=True)
+    gender = models.CharField(max_length=50,choices=[('male','Male'),('female','Female')],null=True,blank=True)
     first_name = models.CharField(max_length=100,null=True,blank=True)
     last_name = models.CharField(max_length=100,null=True,blank=True)
     org_name = models.CharField(max_length=100,null=True,blank=True)
@@ -111,7 +111,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     def clean(self):
         if not isinstance(self.id, uuid.UUID):
-            raise ValidationError({'id': _('Invalid UUID format.')})
+            raise ValidationError({'id': ('Invalid UUID format.')})
 
     def save(self, *args, **kwargs):
         self.clean() 
